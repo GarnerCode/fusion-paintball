@@ -5,6 +5,7 @@ export interface Product {
     category: string,
     manufacturer: string,
     colors: Array<Color>,
+    selectedColor?: Color,
 }
 
 export interface Color {

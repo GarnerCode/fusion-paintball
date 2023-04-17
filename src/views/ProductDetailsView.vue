@@ -62,6 +62,7 @@
             },
             addToCart(): void {
                 const cartItems = this.globalStore.getCartItems;
+                this.product.selectedColor = this.activeColor;
                 cartItems.push(this.product);
                 this.globalStore.setCartItems(cartItems);
                 this.$router.push('/cart');
@@ -105,6 +106,7 @@
             }
             .d-color-option {
                 cursor: pointer;
+                font-size: 3rem;
             }
             .d-price {
                 font-size: 4rem;

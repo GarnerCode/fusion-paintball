@@ -5,7 +5,7 @@
         </div>
         <hr>
         <div class="categories-container">
-            <div class="category-item" v-for="(category, index) of categories" :key="index">
+            <div class="category-item" v-for="(category, index) of categories" :key="index" @click="$router.push(category.route)">
                 <img class="category-img" :src="category.imageUrl">
                 <div class="category-label">{{ category.label }}</div>
             </div>

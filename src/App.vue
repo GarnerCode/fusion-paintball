@@ -39,10 +39,14 @@
   * {
     font-family: var(--font-family-primary);
   }
-  .view-container {
-    margin-top: 8rem;
+  .text-highlight {
+    color: var(--color-primary);
   }
   @media screen and (min-width: 0px) {
+    .view-container {
+      margin-top: 8rem;
+      padding: 1rem 2rem;
+    }
       .button {
       border: none;
       background-color: var(--color-primary);

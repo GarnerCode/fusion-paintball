@@ -1,12 +1,15 @@
 <template>
     <div class="products-list-view view-container">
-        <div class="products-list">
+        <div class="products-list" v-if="products.length">
             <ProductCard
-                v-for="(product, index) of productsByParam()"
+                v-for="(product, index) of products"
                 :key="index"
                 :product="product"
             >
             </ProductCard>
+        </div>
+        <div class="products-list no-products" v-if="!products.length">
+
         </div>
     </div>
 </template>
@@ -16,7 +19,6 @@
     import { Product } from '@/interfaces/Product.interface';
     import { productsList } from '@/constants/productsList';
     import ProductCard from '@/components/ProductCard.vue';
-import { isArray } from '@vue/shared';
 
     export default defineComponent({
         name: 'ProductsListView',
@@ -28,30 +30,47 @@ import { isArray } from '@vue/shared';
         components: {
             ProductCard,
         },
+        mounted() {
+            this.filterProductsByParam();
+        },
+        watch: {
+            '$route.params.filter': {
+                handler: function (val) {
+                    if (val) {
+                        this.filterProductsByParam();
+                    }
+                }
+            }
+        },
         methods: {
-            productsByParam(): Product[] {
+            filterProductsByParam(): void {
                 const param = this.$route.params.filter.toLocaleString().toLocaleLowerCase();
+                console.log('param: ', param);
                 let filteredProducts: Product[] = [];
-                if (param.length && !isArray(param)) {
-                    filteredProducts = this.products.filter((product: Product) => {
+                console.log('products: ', productsList);
+                if (param.length) {
+                    console.log('filtering products');
+                    filteredProducts = productsList.filter((product: Product) => {
                         return product.name.toLocaleLowerCase().includes(param);
                     });
                     if (!filteredProducts.length) {
-                        filteredProducts = this.products.filter((product: Product) => {
+                        filteredProducts = productsList.filter((product: Product) => {
                             return product.category.toLocaleLowerCase().includes(param);
                         });
                     }
                     if (!filteredProducts.length) {
-                        filteredProducts = this.products.filter((product: Product) => {
+                        filteredProducts = productsList.filter((product: Product) => {
                             return product.manufacturer.toLocaleLowerCase().includes(param);
                         });
                     }
+                    console.log('filtered: ', filteredProducts);
                     if (!filteredProducts.length) {
                         filteredProducts = productsList;
                     }
-                    return filteredProducts;
+                    this.products = filteredProducts;
+                } else {
+                    this.products = productsList;
                 }
-                return productsList;
             }
         }
     });

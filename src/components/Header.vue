@@ -5,7 +5,7 @@
             <font-awesome-icon :icon="['fas', 'xmark']" v-if="toggleNav"/>
         </div>
         <div class="logo" @click="$router.push('/')">
-            Fusion Paintball
+            <span class="text-highlight">Fusion</span> Paintball
         </div>
         <div class="cart-button">
             <router-link to="/cart">
@@ -15,7 +15,8 @@
             </router-link>
         </div>
         <ul class="nav-list mobile-nav" v-if="toggleNav">
-            <li class="nav-item" v-for="(item, index) of navItems" :key="index">
+            <input v-model="searchValue" class="nav-search" type="text" v-on:keyup.enter="searchProduct()" placeholder="Search">
+            <li @click="toggleNav = !toggleNav" class="nav-item" v-for="(item, index) of navItems" :key="index">
                 <router-link :to="item.route">{{ item.label }}</router-link>
             </li>
         </ul>
@@ -35,6 +36,14 @@
                 globalStore: useGlobalStore(),
                 navItems,
                 toggleNav: false,
+                searchValue: '',
+            }
+        },
+        methods: {
+            searchProduct(): void {
+                this.$router.push(`/products/${this.searchValue}`);
+                this.searchValue = '';
+                this.toggleNav = !this.toggleNav;
             }
         }
     });
@@ -55,13 +64,15 @@
             width: calc(100vw - 4rem);
             .logo {
                 font-size: 3rem;
+                font-family: var(--font-family-secondary);
+                font-weight: bold;
+                cursor: pointer;
             }
             .mobile-nav {
                 list-style: none;
                 padding: 0;
-                padding-left: 2rem;
+                padding: 2rem;
                 margin: 0;
-                width: 50vw;
                 height: 100vh;
                 position: fixed;
                 z-index: 5;
@@ -75,6 +86,10 @@
                         color: var(--color-black);
                         font-size: 3rem;
                     }
+                }
+                .nav-search {
+                    font-size: 16px;
+                    padding: 1rem;
                 }
             }
             .mobile-nav-overlay {
