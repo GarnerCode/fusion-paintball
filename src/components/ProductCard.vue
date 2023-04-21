@@ -84,4 +84,25 @@
             }
         }
     }
+    @media screen and (min-width: 768px) {
+        .product-card {
+            .c-image {
+                width: 42rem;
+            }
+        }
+    }
+    @media screen and (min-width: 1024px) {
+        .product-card {
+            height: 44rem;
+            .c-image {
+                width: 30rem;
+            }
+            .c-name {
+                max-width: 28rem;
+            }
+            .c-price {
+                font-size: 3rem;
+            }
+        }
+    }
 </style>

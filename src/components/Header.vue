@@ -7,6 +7,18 @@
         <div class="logo" @click="$router.push('/')">
             <span class="text-highlight">Fusion</span> Paintball
         </div>
+        <nav>
+            <ul class="nav-list desktop-nav">
+                <input v-model="searchValue" class="nav-search" type="text" v-on:keyup.enter="searchProduct()" placeholder="Search">
+                <li 
+                    class="nav-item"
+                    v-for="(item, index) of navItems" 
+                    :key="index"
+                >
+                    <router-link :class="{'text-highlight': item.label === 'All Products'}" :to="item.route">{{ item.label }}</router-link>
+                </li>
+            </ul>
+        </nav>
         <div class="cart-button">
             <router-link to="/cart">
                 <font-awesome-icon :icon="['fas', 'cart-shopping']" />
@@ -16,8 +28,13 @@
         </div>
         <ul class="nav-list mobile-nav" v-if="toggleNav">
             <input v-model="searchValue" class="nav-search" type="text" v-on:keyup.enter="searchProduct()" placeholder="Search">
-            <li @click="toggleNav = !toggleNav" class="nav-item" v-for="(item, index) of navItems" :key="index">
-                <router-link :to="item.route">{{ item.label }}</router-link>
+            <li 
+                @click="toggleNav = !toggleNav" 
+                class="nav-item"
+                v-for="(item, index) of navItems" 
+                :key="index"
+            >
+                <router-link :class="{'text-highlight': item.label === 'All Products'}" :to="item.route">{{ item.label }}</router-link>
             </li>
         </ul>
         <div v-if="toggleNav" @click="toggleNav = !toggleNav" class="mobile-nav-overlay"></div>
@@ -42,8 +59,7 @@
         methods: {
             searchProduct(): void {
                 this.$router.push(`/products/${this.searchValue}`);
-                this.searchValue = '';
-                this.toggleNav = !this.toggleNav;
+                this.toggleNav = false;
             }
         }
     });
@@ -62,11 +78,15 @@
             position: fixed;
             top: 0;
             width: calc(100vw - 4rem);
+            box-shadow: var(--box-shadow);
             .logo {
                 font-size: 3rem;
                 font-family: var(--font-family-secondary);
                 font-weight: bold;
                 cursor: pointer;
+            }
+            nav {
+                display: none;
             }
             .mobile-nav {
                 list-style: none;
@@ -86,10 +106,6 @@
                         color: var(--color-black);
                         font-size: 3rem;
                     }
-                }
-                .nav-search {
-                    font-size: 16px;
-                    padding: 1rem;
                 }
             }
             .mobile-nav-overlay {
@@ -127,6 +143,49 @@
             .toggle-nav {
                 font-size: 5rem;
                 width: 5rem;
+            }
+        }
+    }
+    @media screen and (min-width: 1024px) {
+        header {
+            .toggle-nav {
+                display: none;
+            }
+            nav {
+                display: block;
+                .desktop-nav {
+                    list-style: none;
+                    padding: 0;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 3rem;
+                    .nav-item {
+                        a {
+                            font-size: 16px;
+                            text-decoration: none;
+                            color: var(--color-black);
+                            &:hover {
+                                color: var(--color-primary);
+                            }
+                        }
+                    };
+                }
+            }
+        }
+    }
+    @media screen and (min-width: 1400px) {
+        header {
+            .cart-button {
+                font-size: 2rem;
+                a {
+                    .cart-count {
+                        font-size: 1rem;
+                        width: 2rem;
+                        height: 2rem;
+                    }
+                }
             }
         }
     }

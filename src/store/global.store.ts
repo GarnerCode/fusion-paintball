@@ -15,5 +15,12 @@ export const useGlobalStore = defineStore({
         setCartItems(payload: Product[]): void {
             this.cartItems = payload;
         },
+        getPriceTotal(): string {
+            let total = 0;
+            this.getCartItems.forEach((product: Product) => {
+                total += product.price;
+            });
+            return total.toFixed(2);
+        },
     }
 })

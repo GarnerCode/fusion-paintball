@@ -61,4 +61,12 @@
             }
         }
     }
+    @media screen and (min-width: 768px) {
+        .product-categories {
+            .categories-container {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+        }
+    }
 </style>

@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import ProductsListView from '@/views/ProductsListView.vue'
 import ProductDetailsView from '@/views/ProductDetailsView.vue'
 import CartView from '@/views/CartView.vue'
+import CheckoutView from '@/views/CheckoutView.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -18,12 +19,17 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/product-details/:id',
     name: 'product-details',
-    component: ProductDetailsView
+    component: ProductDetailsView,
   },
   {
     path: '/cart',
     name: 'cart',
-    component: CartView
+    component: CartView,
+  },
+  {
+    path: '/checkout',
+    name: 'checkout',
+    component: CheckoutView,
   },
 ]
 
